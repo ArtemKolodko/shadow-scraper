@@ -1,53 +1,74 @@
-import {getDepositEvents} from "./api";
-import {bootstrapDb, exportDatabase, insertDepositEvents} from "./db";
-import {ClMint} from "./types";
+import {getBurnEvents, getMintEvents} from "./api";
+import {bootstrapDb, exportDatabase, insertBurnEvents, insertMintEvents} from "./db";
 import {appConfig} from "./config";
 
 const limit = 1000
 
-const main = async () => {
-  let timeStart = Date.now()
+const processEvents= async (
+  type: 'clMint' | 'clBurn'
+) => {
   let skip = 0
-  let newDepositEvents: ClMint[] = []
-  let totalDepositEvents = 0
+  let events: any[] = []
+  let totalEvents = 0
+
   do {
-    const timeStart = Date.now()
+    const batchTimeStart = Date.now()
     try {
-      newDepositEvents = await getDepositEvents({
+      const fetchMethod = type === 'clMint'
+        ? getMintEvents
+        : getBurnEvents
+      events = await fetchMethod({
         first: limit,
         skip,
         poolSymbol: appConfig.poolSymbol
       })
       skip += limit
-      totalDepositEvents += newDepositEvents.length
+      totalEvents += events.length
 
-      if(newDepositEvents.length > 0) {
-        insertDepositEvents(newDepositEvents)
+      if(events.length > 0) {
+        if(type === 'clMint') {
+          insertMintEvents(events)
+        } else if(type === 'clBurn') {
+          insertBurnEvents(events)
+        }
 
-        const first = newDepositEvents[0]
-        const last = newDepositEvents[newDepositEvents.length - 1]
-        console.log(`[${
+        const first = events[0]
+        const last = events[events.length - 1]
+        console.log(`${type} [${
           first.transaction.blockNumber
         } - ${
           last.transaction.blockNumber
         }] ${
           +last.transaction.blockNumber - +first.transaction.blockNumber
         } blocks, ${
-          newDepositEvents.length
-        } events, ${(Date.now() - timeStart)} ms`)
+          events.length
+        } events, ${(Date.now() - batchTimeStart)} ms`)
       }
-      break;
+      // break;
     } catch (e) {
       console.error('Failed to get deposit events:', e)
     }
-  } while(newDepositEvents.length > 0)
+  } while(events.length > 0)
 
-  console.log('exporting...')
+  return {
+    totalEvents
+  }
+}
+
+const main = async () => {
+  let timeStart = Date.now()
+
+  const { totalEvents: totalMintEvents } = await processEvents('clMint')
+  const { totalEvents: totalBurnEvents } = await processEvents('clBurn')
+
   await exportDatabase()
-  console.log('done')
-  console.log(`Export completed, path=/export, total mint events=${
-    totalDepositEvents
-  }, elapsed: ${Math.round((Date.now() - timeStart) / 1000)} seconds`)
+  console.log(`Export completed, path=/export, total mints=${
+    totalMintEvents
+  }, total burns=${
+    totalBurnEvents
+  } total elapsed: ${
+    Math.round((Date.now() - timeStart) / 1000)
+  } seconds`)
   process.exit(1)
 }
 

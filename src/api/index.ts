@@ -1,6 +1,6 @@
 import axios from "axios";
-import {getDepositsQuery} from "./query";
-import {ClMint} from "../types";
+import {getBurnsQuery, getMintsQuery} from "./query";
+import {ClBurn, ClMint} from "../types";
 import {appConfig} from "../config";
 
 const client = axios.create({
@@ -13,13 +13,24 @@ export interface GetEventsParams {
   poolSymbol: string
 }
 
-export const getDepositEvents = async (params: GetEventsParams) => {
+export const getMintEvents = async (params: GetEventsParams) => {
   const { data } = await client.post<{
     data: {
       clMints: ClMint[]
     }
   }>('/', {
-    query: getDepositsQuery(params)
+    query: getMintsQuery(params)
   })
   return data.data.clMints
+}
+
+export const getBurnEvents = async (params: GetEventsParams) => {
+  const { data } = await client.post<{
+    data: {
+      clBurns: ClBurn[]
+    }
+  }>('/', {
+    query: getBurnsQuery(params)
+  })
+  return data.data.clBurns
 }

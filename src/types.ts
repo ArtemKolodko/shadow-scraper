@@ -54,3 +54,33 @@ export interface MappedClMint {
   amount0: string
   amount1: string
 }
+
+export interface ClBurn {
+  id: string
+  transaction: Transaction
+  pool: ClPool
+  token0: Token
+  token1: Token
+  owner: string
+  origin: string
+  amount: string
+  amount0: string
+  amount1: string
+  amountUSD: string
+  tickLower: string
+  tickUpper: string
+  logIndex: string
+}
+
+export interface MappedClBurn {
+  id: string
+  txHash: string
+  blockNumber: string
+  pool: string
+  userAddress: string
+  token0: string
+  token1: string
+  amount0: string
+  amount1: string
+}
+
