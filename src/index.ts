@@ -1,5 +1,5 @@
 import {getBurnEvents, getMintEvents} from "./api";
-import {bootstrapDb, exportDatabase, insertBurnEvents, insertMintEvents} from "./db";
+import {bootstrapDb, exportAllToCsv, exportDatabase, insertBurnEvents, insertMintEvents} from "./db";
 import {appConfig} from "./config";
 
 const limit = 1000
@@ -74,6 +74,7 @@ const main = async () => {
 
 bootstrapDb()
 main()
+// exportAllToCsv()
 
 process.on('exit', (code) => {
   console.log('Process exited with code:', code);

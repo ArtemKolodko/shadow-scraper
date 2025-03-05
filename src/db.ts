@@ -1,6 +1,7 @@
-import SqLiteDatabase, { Database } from 'better-sqlite3'
+import SqLiteDatabase, {Database, Statement} from 'better-sqlite3'
 import {ClBurn, ClMint} from "./types";
 import {mapClBurn, mapClMint} from "./mappers";
+import fs from "fs";
 
 let db: Database
 
@@ -82,6 +83,35 @@ export const exportDatabase = async () => {
     .catch((err) => {
       console.error('DB export failed:', err);
     });
+}
+
+function* toRows(stmt: any) {
+  yield stmt.columns().map((column: any) => column.name);
+  yield* stmt.raw().iterate();
+}
+
+export const exportToCsv = (
+  filename: string,
+  stmt: Statement
+) => {
+  return new Promise((resolve, reject) => {
+    const stream = fs.createWriteStream(filename);
+    for (const row of toRows(stmt)) {
+      stream.write(row.join(',') + '\n');
+    }
+    stream.on('error', reject);
+    stream.end(resolve);
+  });
+}
+
+export const exportAllToCsv = async () => {
+  const mints = db.prepare('SELECT * FROM mints');
+  await exportToCsv('export/mints.csv', mints)
+  console.log('Mints exported to csv')
+
+  const burns = db.prepare('SELECT * FROM burns');
+  await exportToCsv('export/burns.csv', burns)
+  console.log('Burns exported to csv')
 }
 
 process.on('exit', () => db.close());
