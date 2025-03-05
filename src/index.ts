@@ -42,7 +42,9 @@ const main = async () => {
     }
   } while(newDepositEvents.length > 0)
 
-  exportDatabase()
+  console.log('exporting...')
+  await exportDatabase()
+  console.log('done')
   console.log(`Export completed, path=/export, total mint events=${
     totalDepositEvents
   }, elapsed: ${Math.round((Date.now() - timeStart) / 1000)} seconds`)

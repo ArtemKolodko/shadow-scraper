@@ -5,7 +5,7 @@ import {mapClMint} from "./mappers";
 let db: Database
 
 export const bootstrapDb = () => {
-  db = new SqLiteDatabase('shadow.db', {verbose: console.log})
+  db = new SqLiteDatabase('sqlite/shadow.db', {verbose: console.log})
 
   db.prepare(`DROP TABLE IF EXISTS mints`).run()
   db.prepare(`
@@ -40,10 +40,10 @@ export const insertDepositEvents = (
   insertMany(events.map(mapClMint));
 }
 
-export const exportDatabase = () => {
-  db.backup(`export/shadow_export_${Date.now()}.db`)
-    .then(() => {
-      console.log('Backup completed successfully');
+export const exportDatabase = async () => {
+  return db.backup(`export/shadow_export_${Date.now()}.db`)
+    .then((data) => {
+      console.log('Backup completed successfully', data.totalPages);
     })
     .catch((err) => {
       console.error('Backup failed:', err);
