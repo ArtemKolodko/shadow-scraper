@@ -8,6 +8,7 @@ export interface Transaction {
 
 export interface ClPool {
   id: string
+  symbol: string
 }
 
 export interface Token {
@@ -32,7 +33,6 @@ export interface ClMint {
   token0: Token
   token1: Token
   owner: string
-  sender: string
   origin: string
   amount: string
   amount0: string
@@ -41,4 +41,16 @@ export interface ClMint {
   tickLower: string
   tickUpper: string
   logIndex: string
+}
+
+export interface MappedClMint {
+  id: string
+  txHash: string
+  blockNumber: string
+  pool: string
+  userAddress: string
+  token0: string
+  token1: string
+  amount0: string
+  amount1: string
 }

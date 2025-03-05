@@ -22,17 +22,18 @@ export const getDepositsQuery = (params: GetEventsParams) => {
         timestamp
       }
       owner
-      sender
       origin
       amount0
       amount1
       token0 {
         id
         name
+        symbol
       }
       token1 {
         id
         name
+        symbol
       }
       pool {
         id
