@@ -46,7 +46,8 @@ export interface ClMint {
 export interface MappedClMint {
   id: string
   txHash: string
-  blockNumber: string
+  blockNumber: number
+  timestamp: number
   pool: string
   userAddress: string
   token0: string
@@ -75,7 +76,8 @@ export interface ClBurn {
 export interface MappedClBurn {
   id: string
   txHash: string
-  blockNumber: string
+  blockNumber: number
+  timestamp: number
   pool: string
   userAddress: string
   token0: string

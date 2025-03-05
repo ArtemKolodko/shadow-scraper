@@ -1,10 +1,11 @@
-import {ClMint, MappedClMint} from "./types";
+import {ClMint, MappedClBurn, MappedClMint} from "./types";
 
 export const mapClMint = (event: ClMint): MappedClMint => {
   return {
     id: event.id,
     txHash: event.transaction.id,
-    blockNumber: event.transaction.blockNumber,
+    blockNumber: Number(event.transaction.blockNumber),
+    timestamp: Number(event.transaction.timestamp),
     pool: event.pool.symbol,
     userAddress: event.origin,
     token0: event.token0.symbol,
@@ -14,11 +15,12 @@ export const mapClMint = (event: ClMint): MappedClMint => {
   }
 }
 
-export const mapClBurn = (event: ClMint): MappedClMint => {
+export const mapClBurn = (event: ClMint): MappedClBurn => {
   return {
     id: event.id,
     txHash: event.transaction.id,
-    blockNumber: event.transaction.blockNumber,
+    blockNumber: Number(event.transaction.blockNumber),
+    timestamp: Number(event.transaction.timestamp),
     pool: event.pool.symbol,
     userAddress: event.origin,
     token0: event.token0.symbol,

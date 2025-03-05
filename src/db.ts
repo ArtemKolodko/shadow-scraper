@@ -14,7 +14,8 @@ export const bootstrapDb = () => {
     CREATE TABLE mints (
       id TEXT PRIMARY KEY NOT NULL,
       txHash TEXT NOT NULL,
-      blockNumber TEXT NOT NULL,
+      blockNumber INTEGER NOT NULL,
+      timestamp INTEGER NOT NULL,
       pool TEXT NOT NULL,
       userAddress TEXT NOT NULL,
       token0 TEXT NOT NULL,
@@ -29,7 +30,8 @@ export const bootstrapDb = () => {
     CREATE TABLE burns (
       id TEXT PRIMARY KEY NOT NULL,
       txHash TEXT NOT NULL,
-      blockNumber TEXT NOT NULL,
+      blockNumber INTEGER NOT NULL,
+      timestamp INTEGER NOT NULL,
       pool TEXT NOT NULL,
       userAddress TEXT NOT NULL,
       token0 TEXT NOT NULL,
@@ -46,8 +48,8 @@ export const insertMintEvents = (
   events: ClMint[]
 ) => {
   const insert = db.prepare(`
-    INSERT INTO mints (id, txHash, blockNumber, pool, userAddress, token0, token1, amount0, amount1)
-    VALUES (@id, @txHash, @blockNumber, @pool, @userAddress, @token0, @token1, @amount0, @amount1)
+    INSERT INTO mints (id, txHash, blockNumber, timestamp, pool, userAddress, token0, token1, amount0, amount1)
+    VALUES (@id, @txHash, @blockNumber, @timestamp, @pool, @userAddress, @token0, @token1, @amount0, @amount1)
   `);
 
   const insertMany = db.transaction((items) => {
@@ -61,8 +63,8 @@ export const insertBurnEvents = (
   events: ClBurn[]
 ) => {
   const insert = db.prepare(`
-    INSERT INTO burns (id, txHash, blockNumber, pool, userAddress, token0, token1, amount0, amount1)
-    VALUES (@id, @txHash, @blockNumber, @pool, @userAddress, @token0, @token1, @amount0, @amount1)
+    INSERT INTO burns (id, txHash, blockNumber, timestamp, pool, userAddress, token0, token1, amount0, amount1)
+    VALUES (@id, @txHash, @blockNumber, @timestamp, @pool, @userAddress, @token0, @token1, @amount0, @amount1)
   `);
 
   const insertMany = db.transaction((items) => {
