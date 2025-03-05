@@ -75,7 +75,7 @@ export const insertBurnEvents = (
 }
 
 export const exportDatabase = async () => {
-  return db.backup(`export/shadow_export_${Date.now()}.db`)
+  return db.backup(`export/shadow_export_${Math.round(Date.now() / 1000)}.db`)
     .then(() => {
       console.log('DB export completed successfully');
     })
