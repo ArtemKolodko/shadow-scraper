@@ -31,3 +31,10 @@ npm run dev
 - Parse the response data
 - Store the results in a SQLite database file (e.g., /export/shadow_export.db).
 3. Check the `/export` folder
+
+
+### Calculate TVL
+```shell
+npm install
+npm run tvl
+```

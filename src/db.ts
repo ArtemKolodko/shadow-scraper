@@ -42,7 +42,9 @@ export const bootstrapDb = () => {
   //   )
   // `).run()
 
-  console.log("Created database:", db.name)
+  console.log("Opened database:", db.name)
+
+  return db
 }
 
 export const insertMintEvents = (
