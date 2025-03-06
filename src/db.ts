@@ -10,37 +10,37 @@ export const bootstrapDb = () => {
     // verbose: console.log
   })
 
-  db.prepare(`DROP TABLE IF EXISTS mints`).run()
-  db.prepare(`
-    CREATE TABLE mints (
-      id TEXT PRIMARY KEY NOT NULL,
-      txHash TEXT NOT NULL,
-      blockNumber INTEGER NOT NULL,
-      timestamp INTEGER NOT NULL,
-      pool TEXT NOT NULL,
-      userAddress TEXT NOT NULL,
-      token0 TEXT NOT NULL,
-      token1 TEXT NOT NULL,
-      amount0 TEXT NOT NULL,
-      amount1 TEXT NOT NULL
-    )
-  `).run()
-
-  db.prepare(`DROP TABLE IF EXISTS burns`).run()
-  db.prepare(`
-    CREATE TABLE burns (
-      id TEXT PRIMARY KEY NOT NULL,
-      txHash TEXT NOT NULL,
-      blockNumber INTEGER NOT NULL,
-      timestamp INTEGER NOT NULL,
-      pool TEXT NOT NULL,
-      userAddress TEXT NOT NULL,
-      token0 TEXT NOT NULL,
-      token1 TEXT NOT NULL,
-      amount0 TEXT NOT NULL,
-      amount1 TEXT NOT NULL
-    )
-  `).run()
+  // db.prepare(`DROP TABLE IF EXISTS mints`).run()
+  // db.prepare(`
+  //   CREATE TABLE mints (
+  //     id TEXT PRIMARY KEY NOT NULL,
+  //     txHash TEXT NOT NULL,
+  //     blockNumber INTEGER NOT NULL,
+  //     timestamp INTEGER NOT NULL,
+  //     pool TEXT NOT NULL,
+  //     userAddress TEXT NOT NULL,
+  //     token0 TEXT NOT NULL,
+  //     token1 TEXT NOT NULL,
+  //     amount0 TEXT NOT NULL,
+  //     amount1 TEXT NOT NULL
+  //   )
+  // `).run()
+  //
+  // db.prepare(`DROP TABLE IF EXISTS burns`).run()
+  // db.prepare(`
+  //   CREATE TABLE burns (
+  //     id TEXT PRIMARY KEY NOT NULL,
+  //     txHash TEXT NOT NULL,
+  //     blockNumber INTEGER NOT NULL,
+  //     timestamp INTEGER NOT NULL,
+  //     pool TEXT NOT NULL,
+  //     userAddress TEXT NOT NULL,
+  //     token0 TEXT NOT NULL,
+  //     token1 TEXT NOT NULL,
+  //     amount0 TEXT NOT NULL,
+  //     amount1 TEXT NOT NULL
+  //   )
+  // `).run()
 
   console.log("Created database:", db.name)
 }
