@@ -19,7 +19,6 @@ export const exportToJson = (
 
 const main = async () => {
   try {
-
     let mints: ClMint[] = []
     let burns: ClBurn[] = []
     let poolSymbol = 'wS/USDC.e'
