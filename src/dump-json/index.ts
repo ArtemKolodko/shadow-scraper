@@ -22,6 +22,7 @@ const main = async () => {
 
     let mints: ClMint[] = []
     let burns: ClBurn[] = []
+    let poolSymbol = 'wS/USDC.e'
     let blockNumber = 1707308 // Initial block number
     let continueLoop = true;
     const startTime = Date.now()
@@ -32,7 +33,7 @@ const main = async () => {
       const newMints = await getMintEvents({
         first: 1000,
         filter: {
-          // poolSymbol: 'wS/USDC.e',
+          poolSymbol,
           blockNumber_gt: blockNumber
         }
       })
@@ -58,7 +59,7 @@ const main = async () => {
       const newBurns = await getBurnEvents({
         first: 1000,
         filter: {
-          // poolSymbol: 'wS/USDC.e',
+          poolSymbol,
           blockNumber_gt: blockNumber
         }
       })
