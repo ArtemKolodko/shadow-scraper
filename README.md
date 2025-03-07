@@ -38,3 +38,12 @@ npm run dev
 npm install
 npm run tvl
 ```
+
+### Export to jsonl
+
+[Read more](https://jsonlines.org/) about jsonl
+
+```shell
+npm install
+npm run jsonl
+```

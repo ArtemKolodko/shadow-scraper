@@ -7,7 +7,7 @@
     "build": "tsc",
     "dev": "nodemon src/index.ts",
     "tvl": "nodemon src/tvl/index.ts",
-    "dump_json": "nodemon src/dump-json/index.ts"
+    "jsonl": "nodemon src/jsonl/index.ts"
   },
   "keywords": [],
   "author": "",
