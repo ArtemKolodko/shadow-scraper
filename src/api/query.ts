@@ -1,7 +1,37 @@
-import {GetEventsParams} from "./index";
+import {GetEventsFilter, GetEventsParams} from "./index";
+
+const buildWhereQuery = (filter: GetEventsFilter) => {
+  let where: any = {}
+
+  if(filter.poolSymbol) {
+    where = {
+      ...where,
+      pool_: {
+        symbol: filter.poolSymbol
+      }
+    }
+  }
+
+  if(filter.blockNumber_gt) {
+    where = {
+      ...where,
+      transaction_:{
+        blockNumber_gt: filter.blockNumber_gt
+      }
+    }
+  }
+
+  return buildFilterQuery(where)
+}
+
+const buildFilterQuery = (filter: Object) => {
+  return JSON.stringify(filter).replace(/"([^(")"]+)":/g,"$1:");
+}
 
 export const getMintsQuery = (params: GetEventsParams) => {
-  const { first, skip, poolSymbol } = params
+  const { first = 1000, skip = 0, filter = {} } = params
+
+  const whereQuery = buildWhereQuery(filter)
 
   return `{
     clMints(
@@ -9,11 +39,7 @@ export const getMintsQuery = (params: GetEventsParams) => {
       skip: ${skip}
       orderDirection:asc,
       orderBy:transaction__blockNumber,
-      where:{
-        pool_:{
-          symbol: "${poolSymbol}"
-        }
-      }
+      where: ${whereQuery}
     ) {
       id
       transaction {
@@ -25,6 +51,10 @@ export const getMintsQuery = (params: GetEventsParams) => {
       origin
       amount0
       amount1
+      amountUSD
+      tickLower
+      tickUpper
+      logIndex
       token0 {
         id
         name
@@ -44,7 +74,9 @@ export const getMintsQuery = (params: GetEventsParams) => {
 }
 
 export const getBurnsQuery = (params: GetEventsParams) => {
-  const { first, skip, poolSymbol } = params
+  const { first = 1000, skip = 0, filter = {} } = params
+
+  const whereQuery = buildWhereQuery(filter)
 
   return `{
     clBurns(
@@ -52,11 +84,7 @@ export const getBurnsQuery = (params: GetEventsParams) => {
       skip: ${skip}
       orderDirection:asc,
       orderBy:transaction__blockNumber,
-      where:{
-        pool_:{
-          symbol: "${poolSymbol}"
-        }
-      }
+      where: ${whereQuery}
     ) {
       id
       transaction {
@@ -68,6 +96,10 @@ export const getBurnsQuery = (params: GetEventsParams) => {
       origin
       amount0
       amount1
+      amountUSD
+      tickLower
+      tickUpper
+      logIndex
       token0 {
         id
         name

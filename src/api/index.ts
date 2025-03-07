@@ -7,10 +7,15 @@ const client = axios.create({
   baseURL: appConfig.shadowSubgraphUrl
 })
 
+export interface GetEventsFilter {
+  poolSymbol?: string
+  blockNumber_gt?: number
+}
+
 export interface GetEventsParams {
-  skip: number
-  first: number
-  poolSymbol: string
+  skip?: number
+  first?: number
+  filter?: GetEventsFilter
 }
 
 export const getMintEvents = async (params: GetEventsParams) => {

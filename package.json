@@ -6,7 +6,8 @@
     "start": "node dist/index.js",
     "build": "tsc",
     "dev": "nodemon src/index.ts",
-    "tvl": "nodemon src/tvl/index.ts"
+    "tvl": "nodemon src/tvl/index.ts",
+    "dump_json": "nodemon src/dump-json/index.ts"
   },
   "keywords": [],
   "author": "",

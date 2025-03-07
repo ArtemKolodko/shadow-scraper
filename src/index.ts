@@ -20,7 +20,9 @@ const processEvents= async (
       events = await fetchMethod({
         first: limit,
         skip,
-        poolSymbol: appConfig.poolSymbol
+        filter: {
+          poolSymbol: appConfig.poolSymbol
+        }
       })
       skip += limit
       totalEvents += events.length
