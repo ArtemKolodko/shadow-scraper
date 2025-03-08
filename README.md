@@ -47,3 +47,6 @@ npm run tvl
 npm install
 npm run jsonl
 ```
+
+### Subgraph API
+[Example request](https://sonic.kingdomsubgraph.com/subgraphs/name/exp/graphql?query=%7B%0A++clMints%28%0A++++skip%3A0%2C%0A++++first%3A1%2C%0A++++orderDirection%3Adesc%2C%0A++++orderBy%3Atransaction__blockNumber%2C%0A++++where%3A%7B%0A++++++pool_%3A%7B%0A++++++++symbol%3A+%22wS%2FUSDC.e%22%0A++++++%7D%2C%0A++++++transaction_%3A%7B%0A++++++++blockNumber_gt%3A9999916%0A++++++%7D%0A++++%7D%0A++%29%7B%0A++++id%0A++++transaction+%7B%0A++++++id%0A++++%09blockNumber%0A++++++timestamp%0A++%7D%0A++++owner%0A++++sender%0A++++origin%0A++++amount0%0A++++amount1%0A++++token0+%7B%0A++++++id%0A++++++name%0A++++++symbol%0A++++%7D%0A++++token1+%7B%0A++++++id%0A++++++name%0A++++%7D%0A++++pool+%7B%0A++++++id%0A++++++symbol%0A++++%7D%0A++%7D%0A++clBurns%28%0A++++first%3A1%2C%0A++++orderDirection%3Adesc%2C%0A++++orderBy%3Atransaction__blockNumber%2C%0A++++where%3A%7B%0A++++++pool_%3A%7B%0A++++++++symbol%3A+%22wS%2FUSDC.e%22%0A++++++%7D%2C%0A++++++transaction_%3A%7B%0A++++++++blockNumber_gt%3A9999916%0A++++++%7D%0A++++%7D%0A++%29+%7B%0A+++++id%0A++++owner%0A++++origin%0A++++amount0%0A++++amount1%0A++++token0+%7B%0A++++++id%0A++++++name%0A++++%7D%0A++++token1+%7B%0A++++++id%0A++++++name%0A++++%7D%0A++++pool+%7B%0A++++++id%0A++++++symbol%0A++++%7D%0A++%7D%0A%7D#)
